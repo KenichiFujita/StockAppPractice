@@ -44,15 +44,6 @@ class SearchViewController: UIViewController {
         navigationItem.searchController = searchController
 
         tableView.frame = view.bounds
-
-        let width: CGFloat = 240.0
-        let height: CGFloat = 160.0
-
-        let demoView = DemoView(frame: CGRect(x: view.frame.size.width/2 - width/2,
-                                              y: view.frame.size.height/2 - height/2,
-                                              width: width,
-                                              height: height))
-        view.addSubview(demoView)
     }
 
     override func viewDidLoad() {
@@ -97,36 +88,4 @@ extension SearchViewController: UISearchBarDelegate {
         viewModel.inputs.searchTextDidChange(text: searchText)
     }
 
-}
-
-class DemoView: UIView {
-
-    var path: UIBezierPath!
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .red
-        simpleShapeLayer()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func createRect() {
-        path = UIBezierPath()
-        path.move(to: CGPoint(x: 10, y: 10))
-        path.addLine(to: CGPoint(x: 10, y: frame.height - 10))
-        path.addLine(to: CGPoint(x: frame.width - 10, y: frame.height - 10))
-        path.addLine(to: CGPoint(x: frame.width - 10, y: 10))
-        path.close()
-    }
-
-    func simpleShapeLayer() {
-        createRect()
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = path.cgPath
-
-        layer.addSublayer(shapeLayer)
-    }
 }

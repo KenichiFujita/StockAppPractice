@@ -9,34 +9,34 @@ import UIKit
 
 class StockViewDataSource: NSObject, UICollectionViewDataSource {
 
-//    var stocks: [Interval: [TimeSeries]] = [:]
-    var company: Company?
-    var items: [StockViewModelItem] = []
+    let company: Company
+
+    init(company: Company) {
+        self.company = company
+    }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return items.count
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items[section].rowCount
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = items[indexPath.section]
-        switch item.type {
-        case .companyInfo:
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StockInfoCell.identifier, for: indexPath) as? StockInfoCell {
-                
-                return cell
-            }
-        case .timeInterval:
-            return UICollectionViewCell()
-        case .timeSeries:
-            return UICollectionViewCell()
-        case .stockInfo:
-            return UICollectionViewCell()
+
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StockInfoHeaderCell.identifier, for: indexPath) as? StockInfoHeaderCell {
+            configure(cell)
+            return cell
         }
+
         return UICollectionViewCell()
+    }
+
+    private func configure(_ cell: StockInfoHeaderCell) {
+        cell.symbolLabel.text = company.name
+        let viewModel = StockHeaderCellViewModel(company: company)
+        cell.set(viewModel: viewModel)
     }
 
 }
