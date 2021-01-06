@@ -9,21 +9,21 @@ import UIKit
 
 class StockViewController: UIViewController {
 
-    let viewModel: StockViewModelType
-    let dataSource: StockViewDataSource = StockViewDataSource()
+//    let viewModel: StockViewModelType
+    let dataSource: StockViewDataSource
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .systemBackground
-        collectionView.register(StockInfoCell.self, forCellWithReuseIdentifier: StockInfoCell.identifier)
+        collectionView.register(StockInfoHeaderCell.self, forCellWithReuseIdentifier: StockInfoHeaderCell.identifier)
         return collectionView
     }()
 
     init(_ company: Company) {
-        self.viewModel = StockViewModel(company)
-        dataSource.company = company
+//        self.viewModel = StockViewModel(company)
+        dataSource = StockViewDataSource(company: company)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -42,27 +42,27 @@ class StockViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bind()
+//        bind()
         collectionView.delegate = self
         collectionView.dataSource = dataSource
-        viewModel.inputs.viewDidLoad()
+//        viewModel.inputs.viewDidLoad()
     }
 
-    private func bind() {
-        viewModel.outputs.reloadData = { [weak self] items in
-            if let viewController = self {
-                viewController.dataSource.items = items
-//                viewController.dataSource.stocks[intervalAndTimeSeries.0] = intervalAndTimeSeries.1
-            }
-        }
-    }
+//    private func bind() {
+//        viewModel.outputs.reloadData = { [weak self] items in
+//            if let viewController = self {
+//                viewController.dataSource.timeSerieses = items
+//                    viewController.collectionView.reloadData()
+//            }
+//        }
+//    }
     
 }
 
 extension StockViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        return CGSize(width: view.frame.width, height: view.frame.height / 2)
     }
 
 }

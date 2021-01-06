@@ -101,7 +101,6 @@ class WebService {
     }
 
     func stock(_ name: String, interval: Interval, completionHandler: @escaping (Result<[TimeSeries], StockAppError>) -> Void) {
-        print(AVAPIurl.timeSeriesIntraday(symbol: "IBM", interval: .daily).url)
         fetch(url: AVAPIurl.timeSeriesIntraday(symbol: name, interval: interval).url, completionHandler: { result in
             switch result {
             case .success(let data):
